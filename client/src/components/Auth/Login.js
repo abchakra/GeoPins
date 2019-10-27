@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { GraphQLClient } from "graphql-request";
-import { GoogleLogin, GoogleLogout } from "react-google-login";
+import { GoogleLogin } from "react-google-login";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 
@@ -11,10 +11,6 @@ import { BASE_URL } from "../../client";
 const Login = ({ classes }) => {
   const { dispatch } = useContext(Context);
 
-  const logout = async googleUser => {
-    dispatch({ type: "LOGIN_USER", payload: null });
-    dispatch({ type: "IS_LOGGED_IN", payload: false });
-  }
   const onSuccess = async googleUser => {
     try {
       const idToken = googleUser.getAuthResponse().id_token;
@@ -22,9 +18,9 @@ const Login = ({ classes }) => {
       const client = new GraphQLClient(BASE_URL, {
         headers: { authorization: idToken }
       });
-      
-      const data= await client.request(ME_QUERY);
-      
+
+      const data = await client.request(ME_QUERY);
+
       // console.log("Success Loggin", me)
 
       dispatch({ type: "LOGIN_USER", payload: data.me });
@@ -59,13 +55,6 @@ const Login = ({ classes }) => {
         theme="dark"
         cookiePolicy={'single_host_origin'}
       />
-
-      <GoogleLogout
-        clientId="31018125307-pf8fa1umfhp6nasbe6snd90vftf6m9v1.apps.googleusercontent.com"
-        buttonText="Logout"
-        onLogoutSuccess={logout}
-      >
-      </GoogleLogout>
     </div>
   );
 };
