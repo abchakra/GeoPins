@@ -4,8 +4,9 @@ import { createContext } from 'react'
 const Context = createContext({
 
     currentUser: null,
-    isAuth: false
+    isAuth: false,
+    draft: null,
 })
 
 
-export default Context;
+export default Context
