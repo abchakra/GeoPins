@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
-
+import PinIcon from "./PinIcon";
 
 const INITIAL_VIEWPORT = {
   latitude: 49.4739456,
@@ -49,6 +49,20 @@ const Map = ({ classes }) => {
             onViewportChange={newViewport => setViewport(newViewport)}
           />
         </div>
+
+        {/* Pin for User's Current Position */}
+        {userPosition && (
+          <Marker
+            latitude={userPosition.latitude}
+            longitude={userPosition.longitude}
+            offsetLeft={-19}
+            offsetTop={-37}
+          >
+            <PinIcon size={40} color="red" />
+          </Marker>
+        )}
+
+
 
       </ReactMapGL>
 
