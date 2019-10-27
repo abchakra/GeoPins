@@ -27,9 +27,15 @@ const Map = ({ classes }) => {
         onViewportChange={newViewport => setViewport(newViewport)}
         {...viewport}
       >
-
+        {/* Navigation Control */}
+        <div className={classes.navigationControl}>
+          <NavigationControl
+            onViewportChange={newViewport => setViewport(newViewport)}
+          />
+        </div>
 
       </ReactMapGL>
+
     </div
     >
   );
