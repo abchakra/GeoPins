@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import ReactMapGL, { NavigationControl, Marker, Popup } from "react-map-gl";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
@@ -7,14 +7,30 @@ import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
 
 
 const INITIAL_VIEWPORT = {
-  latitude: 37.7577,
-  longitude: -122.4376,
+  latitude: 49.4739456,
+  longitude: 8.4598784,
   zoom: 13
 };
 
 
 const Map = ({ classes }) => {
   const [viewport, setViewport] = useState(INITIAL_VIEWPORT);
+  const [userPosition, setUserPosition] = useState(null);
+
+  useEffect(() => {
+    getUserPosition();
+  }, []);
+
+  const getUserPosition = () => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(position => {
+        const { latitude, longitude } = position.coords;
+        // console.log("My location ", latitude, longitude)
+        setViewport({ ...viewport, latitude, longitude });
+        setUserPosition({ latitude, longitude });
+      });
+    }
+  };
 
   return (
 
